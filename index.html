@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f3f4f8">
+<title>Meridian</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<meta name="apple-mobile-web-app-title" content="Meridian">
+<style>
+:root{
+  --bg:#f3f4f8; --card:#ffffff; --text:#0a0b10; --muted:#566074; --line:rgba(12,14,30,.11);
+  --accent:#1457ff; --accent-soft:#e6edff; --red:#e11d48; --green:#15803d; --amber:#b45309;
+  --shadow:0 1px 2px rgba(10,12,30,.07),0 10px 28px rgba(10,12,30,.06);
+}
+html{background:var(--bg);min-height:100%;-webkit-text-size-adjust:100%}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.4;min-height:calc(100vh + 1px);padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+button{font:inherit;color:inherit;cursor:pointer}
+header{position:sticky;top:0;z-index:50;background:rgba(243,244,248,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:calc(12px + env(safe-area-inset-top)) 16px 10px;border-bottom:1px solid var(--line)}
+.hrow{display:flex;align-items:center;gap:10px}
+.logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#1457ff,#00c2ff);display:flex;align-items:center;justify-content:center}
+.logo svg{width:20px;height:20px}
+header h1{font-size:23px;font-weight:800;letter-spacing:-.5px}
+.hbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;padding:0;color:var(--text)}
+.hbtn svg{width:19px;height:19px;fill:currentColor}
+.hbtn.spin svg{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.updated{font-size:12px;color:var(--muted);margin-top:4px}
+.updated b{color:var(--accent);font-weight:700}
+.container{padding:12px 14px;max-width:560px;margin:0 auto}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 14px 10px;margin:0 -14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chip-b{flex:0 0 auto;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600;color:var(--text)}
+.chip-b.on{background:var(--text);color:#fff;border-color:var(--text)}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:18px 2px 8px;display:flex;align-items:center;gap:8px}
+.sec:first-child{margin-top:4px}
+.sec i{flex:1;height:1px;background:var(--line)}
+.card{position:relative;background:var(--card);border-radius:18px;padding:14px 14px 12px 18px;margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden}
+.card .bar{position:absolute;left:0;top:0;bottom:0;width:5px}
+.meta{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;font-size:12px;color:var(--muted);margin-bottom:7px}
+.tag{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.3px;color:#fff}
+.tag.cat{background:#eceef5;color:#2a3144}
+.cov{display:inline-flex;align-items:center;gap:4px;font-weight:700;color:var(--text)}
+.dots{display:inline-flex;gap:2px}.dots i{width:5px;height:5px;border-radius:50%;background:#d3d7e3}.dots i.on{background:var(--accent)}
+.big{color:var(--red);font-weight:800}
+.row{display:flex;gap:12px}
+.txt{flex:1;min-width:0}
+.title{font-size:17.5px;font-weight:800;line-height:1.25;letter-spacing:-.2px}
+.story.read .title{color:#6b7385;font-weight:700}
+.sum{font-size:14.5px;color:#3b4356;margin-top:5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.story.open .sum{-webkit-line-clamp:unset;display:block}
+.thumb{width:84px;height:84px;border-radius:12px;object-fit:cover;background:#e3e6ef;flex:0 0 auto}
+.foot{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;color:var(--muted)}
+.foot .src{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.th{display:inline-block;font-size:11.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:999px;margin-right:4px}
+.act{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:4px;color:var(--text);text-decoration:none}
+.act.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.act.saved{background:#fff7d6;border-color:#f0d36b;color:#7a5b00}
+.more{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.story.open .more{display:block}
+.more a.s{display:block;padding:7px 0;font-size:14px;color:var(--text);text-decoration:none;border-bottom:1px solid var(--line)}
+.more a.s:last-of-type{border-bottom:none}
+.more a.s b{color:var(--accent)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.breaking{display:block;text-decoration:none;color:#fff;background:linear-gradient(135deg,#e11d48,#be123c);border-radius:18px;padding:13px 15px;margin-bottom:10px;box-shadow:0 8px 22px rgba(225,29,72,.28)}
+.breaking .k{font-size:11px;font-weight:900;letter-spacing:1.2px;opacity:.9}
+.breaking .t{font-size:16.5px;font-weight:800;line-height:1.25;margin-top:3px}
+.breaking .m{font-size:12px;opacity:.9;margin-top:4px}
+.week{background:linear-gradient(135deg,#0a0b10,#1d2540);color:#fff;border-radius:18px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.week .k{font-size:11px;font-weight:800;letter-spacing:1.1px;color:#9db4ff}
+.week .t{font-size:20px;font-weight:800;margin-top:3px;letter-spacing:-.3px}
+.week .s{font-size:13px;color:#c5cce0;margin-top:3px}
+.empty{background:#fff;border-radius:18px;padding:22px 18px;text-align:center;color:var(--muted);box-shadow:var(--shadow)}
+.empty b{display:block;color:var(--text);font-size:17px;margin-bottom:6px}
+.more-btn{display:block;width:100%;padding:13px;border-radius:14px;border:1px solid var(--line);background:#fff;font-weight:700;color:var(--accent);margin:4px 0 8px}
+.box{background:#fff;border-radius:18px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.box h4{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.count{font-size:34px;font-weight:800;letter-spacing:-1px;color:var(--accent)}
+details{border-top:1px solid var(--line);padding:10px 0}
+details:first-of-type{border-top:none}
+summary{font-weight:700;font-size:15px;list-style:none;cursor:pointer;display:flex;justify-content:space-between}
+summary::after{content:'+';color:var(--muted);font-weight:700}
+details[open] summary::after{content:'–'}
+details ul{margin:8px 0 0 18px;font-size:14px;color:#2f3750}
+details li{margin:3px 0}
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--line);display:flex;padding:8px 0 max(6px, calc(env(safe-area-inset-bottom) - 18px))}
+.nb{flex:1;background:none;border:none;color:#7b8498;font-size:10.5px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative}
+.nb.on{color:var(--accent)}
+.nb svg{width:25px;height:25px;fill:currentColor}
+.nb .badge{position:absolute;top:-2px;left:calc(50% + 6px);background:var(--red);color:#fff;font-size:10px;font-weight:800;border-radius:9px;padding:1px 5px;min-width:16px}
+.hidden{display:none}
+.sheet{position:fixed;inset:0;z-index:300;background:rgba(10,12,30,.45);display:none;align-items:flex-end}
+.sheet.show{display:flex}
+.box-s{background:#fff;width:100%;max-height:92vh;overflow-y:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom))}
+.box-s h3{font-size:19px;font-weight:800;margin-bottom:4px}
+.box-s .sub{font-size:13.5px;color:var(--muted);margin-bottom:10px}
+textarea{width:100%;min-height:150px;border-radius:14px;border:1px solid var(--line);background:#f7f8fb;padding:12px;font:inherit;font-size:16px;color:var(--text);resize:vertical}
+.wc{font-size:13px;font-weight:700;margin:6px 2px;color:var(--muted)}
+.wc.ok{color:var(--green)}.wc.over{color:var(--red)}
+.phr{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.phr button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 11px;font-size:13px;font-weight:600}
+.pbtn{width:100%;padding:13px;border-radius:14px;border:none;background:var(--accent);color:#fff;font-weight:800;font-size:16px;margin-top:8px}
+.pbtn.ghost{background:#eef0f6;color:var(--text)}
+.hl{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <div class="hrow">
+    <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg></div>
+    <h1 id="pt">Meridian</h1>
+    <span style="flex:1"></span>
+    <button class="hbtn" id="refresh" aria-label="Refresh"><svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg></button>
+    <button class="hbtn" id="info" aria-label="About" style="font-weight:800;font-size:16px">i</button>
+  </div>
+  <div class="updated" id="upd">Loading…</div>
+</header>
+
+<div class="container" id="app"></div>
+
+<nav class="nav">
+  <button class="nb on" data-v="today"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Today</button>
+  <button class="nb" data-v="europe"><svg viewBox="0 0 24 24"><path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z"/></svg>Europe</button>
+  <button class="nb" data-v="world"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>World</button>
+  <button class="nb" data-v="themes"><svg viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>Prépa</button>
+  <button class="nb" data-v="saved"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>Saved<span class="badge hidden" id="sb">0</span></button>
+</nav>
+
+<div class="sheet" id="psheet" onclick="if(event.target.id==='psheet')closePractice()">
+  <div class="box-s">
+    <h3>Résumé &amp; commentaire</h3>
+    <div class="sub" id="p-story"></div>
+    <div class="hl">Step 1: summarise in <b>70–120 words</b> (oral format: 5 min). Step 2: give your own comment.</div>
+    <textarea id="p-text" placeholder="The article reports that…"></textarea>
+    <div class="wc" id="p-wc">0 words</div>
+    <div class="hl">Tap to insert:</div>
+    <div class="phr" id="p-phr"></div>
+    <button class="pbtn" onclick="closePractice()">Save &amp; close</button>
+    <button class="pbtn ghost" onclick="copyPractice()">Copy my text</button>
+  </div>
+</div>
+
+<div class="sheet" id="isheet" onclick="if(event.target.id==='isheet')closeInfo()">
+  <div class="box-s">
+    <h3>About Meridian</h3>
+    <div class="sub" id="i-stat"></div>
+    <div class="box" style="box-shadow:none;border:1px solid var(--line)">
+      <h4>How stories are ranked</h4>
+      <div class="hl" style="color:#2f3750;font-size:14px">A story climbs when many outlets cover it (the more independent newsrooms agree it matters, the higher it goes), when it is fresh, and when it concerns France or Europe. Then the app mixes topics and regions so you do not get ten stories about the same thing. Stories matching this week's vocabulary theme get a boost.</div>
+    </div>
+    <div class="box" style="box-shadow:none;border:1px solid var(--line)"><h4>Sources not responding</h4><div class="hl" id="i-fail" style="color:#2f3750;font-size:14px">–</div></div>
+    <button class="pbtn ghost" onclick="resetRead()">Mark everything unread</button>
+    <button class="pbtn" onclick="closeInfo()">Close</button>
+  </div>
+</div>
+
+<script>
+/* ============ constants ============ */
+var REGION_COLORS={France:'#e11d48',Europe:'#2456e6',UK:'#7c3aed',USA:'#ea580c','Middle East':'#0f766e',Asia:'#a16207',Africa:'#15803d',Americas:'#0e7490',World:'#475569'};
+var EURO_GROUP=['France','Europe','UK'];
+var WORLD_REGIONS=['USA','Middle East','Asia','Africa','Americas','World'];
+var CATS=['Politics','Conflict','Economy','Environment','Science','Tech','Health','Society','Culture','Sport','Education','Media','World'];
+var THEME_LABELS={world:'World affairs',earth:'Endangered Earth',media:'The media & the press',morality:'Morality & ethics',politics:'Politics & elections',work:'Work & the job market',demography:'Demographic issues',inequality:'Inequalities',sustain:'Sustainability',education:'Education',sport:'Sports & the Olympics',city:'City life',science:'Maths & physics',health:'Remedies & health',us_inst:'US institutions',uk_inst:'UK institutions'};
+/* [week starting, vocabulary title, chapter(s), news themes, sequence] — from "English Curriculum 2, Sup 2026-27" */
+var SCHEDULE=[
+['2026-09-07','Countries and peoples','Annexe',[],''],['2026-09-14','World affairs','85',['world'],''],['2026-09-21','Endangered Earth','81',['earth'],''],
+['2026-09-28','Duration, frequency, the date','124',[],''],['2026-10-05','Cause and effect, the possible and the probable','126',[],''],['2026-10-12','Acting on things','27',[],''],
+['2026-10-19','The media, the press','56',['media'],''],['2026-10-26','Morality','9',['morality'],''],
+['2026-11-02','Political regimes, ideologies','60',['politics','us_inst'],'US institutions + midterm elections'],['2026-11-09','Political life, elections','60+61',['politics','us_inst'],'US institutions + midterm elections'],
+['2026-11-16','Politics: legislative power','61+62',['politics','us_inst'],'US institutions + midterm elections'],['2026-11-23','Politics: executive power','62+63',['politics','us_inst'],'US institutions + midterm elections'],
+['2026-11-30','Work: the job market','90',['work'],''],['2026-12-07','Work: in the workplace','90+91',['work'],''],['2026-12-14','Sensibility','13',[],''],['2026-12-21','Problems to solve','25',[],''],
+['2026-12-28','Necessity and choice','24',[],''],['2027-01-04','Behaviour and manners','8',[],''],['2027-01-11','Opinions','19',[],''],['2027-01-18','Knowledge, reasoning','12',[],''],
+['2027-01-25','Politics','60+61+62',['politics','uk_inst'],'UK institutions'],['2027-02-01','Politics','63+64',['politics','uk_inst'],'UK institutions'],
+['2027-02-08','Maths & physics','106+107',['science'],''],['2027-02-15','Sports, the Olympic Games','41',['sport'],''],['2027-02-22','City life','66',['city'],''],
+['2027-03-01','Demographic issues','86',['demography'],'Synthesis method'],['2027-03-08','Inequalities: wealth and poverty','86+68',['inequality'],'Synthesis method'],['2027-03-15','Sustainability','86+68+83',['sustain'],'Synthesis method'],
+['2027-03-22','Speaking and speech','47',['media'],''],['2027-03-29','Remedies','45',['health'],''],['2027-04-05','Pleasure and pain','14',[],''],['2027-04-12','Certainty, reality, similarity, inclusion','127',[],''],
+['2027-04-19','Moods','15',[],''],['2027-04-26','Failing and succeeding','26',[],''],['2027-05-03','Acting on people','50',[],''],['2027-05-10','Inequalities: the gender gap','69',['inequality'],''],
+['2027-05-17','The education system','51',['education'],'Education'],['2027-05-24','Education: curriculum, discipline','51+52',['education'],'Education'],['2027-05-31','Education: assessment, achievement, difficulties','51+52+53',['education'],'Education']
+];
+var PHRASES=['According to the article,','The author argues that…','It is worth stressing that…','Admittedly,','Nevertheless,','On the one hand… on the other hand…','This raises the question of whether…','As a result,','In my opinion,','To conclude,','The text points out that…','Needless to say,'];
+var TOOLKIT=[
+['Reporting verbs (characterise the author)','to account for · to acknowledge · to admit · to advocate · to argue · to assert · to assume · to claim · to contend · to dismiss · to point out · to put forward · to stress · to urge · to warn · to maintain · to insist on · to hint'],
+['Introducing someone else’s view','According to X, … · X claims / states / asserts / maintains / points out that… · As emphasized by X, …'],
+['Cause & consequence','Consequently · As a result · Therefore · Thus · Hence · X is largely due to Y · X is shaped / triggered / fostered by Y · It follows that… · This raises the question of whether…'],
+['Opposition & contrast','Nonetheless · Nevertheless · However, it must not be forgotten that… · While it cannot be denied that…, it must be borne in mind that… · Contrary to what may be expected, … · Despite X, the fact remains that… · In contrast, …'],
+['Concluding','It can thus be concluded that… · Ultimately, … · To conclude, … · To some extent it is true that… yet it must be acknowledged that…'],
+['Concours reminders','Mines-Ponts: résumé 70–120 words + opinion question 110–200 words (1h30). Centrale/X-ENS orals: article of 500–600 words, 20 min preparation, résumé + commentaire. Written synthesis: 400–675 words depending on the school.']
+];
+
+/* ============ helpers ============ */
+function $(id){return document.getElementById(id)}
+function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(m){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]})}
+function lsGet(k,d){try{var v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function safeUrl(u){return /^https?:\/\//i.test(u||'')?u:'#'}
+function pad(n){return String(n).padStart(2,'0')}
+function isoLocal(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+function ago(iso){var m=Math.max(0,Math.round((Date.now()-new Date(iso).getTime())/60000));if(m<2)return 'just now';if(m<60)return m+' min ago';var h=Math.round(m/60);if(h<24)return h+' h ago';return Math.round(h/24)+' d ago'}
+
+/* ============ state ============ */
+var NEWS={stories:[],updated:null,health:[]};
+var view='today',catFilter='All',euFilter='All',wFilter='All',themeSel=null,showMore={};
+var saved=lsGet('mer_saved',{}), read=lsGet('mer_read',{}), lastVisit=lsGet('mer_last',0);
+var open_={}, loadedAt=0;
+
+function weekInfo(){
+  var iso=isoLocal(new Date()),cur=null,next=null;
+  for(var i=0;i<SCHEDULE.length;i++){ if(SCHEDULE[i][0]<=iso)cur=SCHEDULE[i]; else{next=SCHEDULE[i];break} }
+  return {cur:cur,next:next};
+}
+function weekThemes(){var w=weekInfo();return w.cur?w.cur[3]:[]}
+
+/* ============ ranking ============ */
+function adj(s){
+  var v=s.score, wt=weekThemes();
+  if(wt.length&&s.themes&&s.themes.some(function(t){return wt.indexOf(t)>-1}))v*=1.35;
+  if(read[s.id])v*=0.35;
+  return v;
+}
+function diversify(list,n,catPen,regPen){
+  var pool=list.slice(),out=[],c={},r={};
+  while(out.length<n&&pool.length){
+    var bi=0,bs=-1;
+    for(var i=0;i<pool.length;i++){
+      var s=pool[i],v=adj(s)*Math.pow(catPen,c[s.category]||0)*Math.pow(regPen,r[s.region]||0);
+      if(v>bs){bs=v;bi=i}
+    }
+    var p=pool.splice(bi,1)[0];out.push(p);c[p.category]=(c[p.category]||0)+1;r[p.region]=(r[p.region]||0)+1;
+  }
+  return out;
+}
+function byIds(a){var m={};a.forEach(function(s){m[s.id]=1});return m}
+function without(list,taken){return list.filter(function(s){return !taken[s.id]})}
+
+/* ============ rendering ============ */
+function storyCard(s){
+  var col=REGION_COLORS[s.region]||'#475569';
+  var isOpen=!!open_[s.id], isRead=!!read[s.id], isSaved=!!saved[s.id];
+  var dots='';for(var i=0;i<6;i++)dots+='<i class="'+(i<Math.min(6,s.coverage)?'on':'')+'"></i>';
+  var cov='<span class="cov"><span class="dots">'+dots+'</span>'+s.coverage+(s.coverage>1?' outlets':' outlet')+'</span>';
+  var big=s.coverage>=5?'<span class="big">BIG STORY</span>':'';
+  var thumb=s.image?'<img class="thumb" loading="lazy" referrerpolicy="no-referrer" src="'+esc(s.image)+'" alt="" onerror="this.style.display=\'none\'">':'';
+  var others=s.sources.filter(function(x){return x.outlet!==s.outlet}).length;
+  var srcTxt=esc(s.outlet)+(others?' +'+others+' more':'');
+  var themes=(s.themes||[]).map(function(t){return '<span class="th">'+esc(THEME_LABELS[t]||t)+'</span>'}).join('');
+  var srcList=s.sources.map(function(x){return '<a class="s" href="'+esc(safeUrl(x.link))+'" target="_blank" rel="noopener" onclick="markRead(\''+s.id+'\')"><b>'+esc(x.outlet)+'</b> — '+esc(x.title)+'</a>'}).join('');
+  return '<article class="card story'+(isRead?' read':'')+(isOpen?' open':'')+'" data-id="'+s.id+'">'
+   +'<div class="bar" style="background:'+col+'"></div>'
+   +'<div class="meta"><span class="tag" style="background:'+col+'">'+esc(s.region)+'</span><span class="tag cat">'+esc(s.category)+'</span>'+cov+big+'<span>'+ago(s.published)+'</span></div>'
+   +'<div class="row"><div class="txt"><h3 class="title">'+esc(s.title)+'</h3>'+(s.summary?'<p class="sum">'+esc(s.summary)+'</p>':'')+'</div>'+thumb+'</div>'
+   +'<div class="foot"><span class="src">'+srcTxt+'</span>'
+   +'<button class="act'+(isSaved?' saved':'')+'" data-a="save" data-id="'+s.id+'">'+(isSaved?'★ Saved':'☆ Save')+'</button>'
+   +'<a class="act primary" href="'+esc(safeUrl(s.link))+'" target="_blank" rel="noopener" data-a="read" data-id="'+s.id+'">Read ↗</a></div>'
+   +(themes?'<div style="margin-top:8px">'+themes+'</div>':'')
+   +'<div class="more"><div class="hl" style="margin-bottom:4px">Covered by:</div>'+srcList
+   +'<div class="btns"><button class="act" data-a="practice" data-id="'+s.id+'">✎ Practise résumé</button></div></div>'
+   +'</article>';
+}
+function section(title){return '<div class="sec">'+esc(title)+'<i></i></div>'}
+function cards(list){return list.map(storyCard).join('')}
+function chipRow(items,sel,key){
+  return '<div class="chips">'+items.map(function(c){return '<button class="chip-b'+(c===sel?' on':'')+'" data-chip="'+key+'" data-val="'+esc(c)+'">'+esc(c)+'</button>'}).join('')+'</div>';
+}
+function moreBtn(key,total,shown){
+  return total>shown?'<button class="more-btn" data-more="'+key+'">Show more ('+(total-shown)+')</button>':'';
+}
+function emptyState(){
+  return '<div class="empty"><b>No stories yet</b>The first update runs a few minutes after you switch on the GitHub job. In your repository open <b style="display:inline;font-size:inherit">Actions → Update news → Run workflow</b>, wait a minute, then tap ↻.</div>';
+}
+function breakingBanners(){
+  var now=Date.now();
+  var b=NEWS.stories.filter(function(s){return s.breaking&&now-new Date(s.published).getTime()<6*3600e3}).slice(0,2);
+  return b.map(function(s){
+    return '<a class="breaking" href="'+esc(safeUrl(s.link))+'" target="_blank" rel="noopener" data-a="read" data-id="'+s.id+'"><div class="k">BREAKING · '+esc(s.region.toUpperCase())+' · '+s.coverage+' OUTLETS</div><div class="t">'+esc(s.title)+'</div><div class="m">'+esc(s.outlet)+' · '+ago(s.published)+'</div></a>';
+  }).join('');
+}
+function weekBadge(){
+  var w=weekInfo().cur; if(!w)return '';
+  return '<div class="week"><div class="k">THIS WEEK’S VOCABULARY</div><div class="t">'+esc(w[1])+'</div><div class="s">Chapter '+esc(w[2])+(w[4]?' · '+esc(w[4]):'')+(w[3].length?' · stories on this theme are boosted':'')+'</div></div>';
+}
+
+function renderToday(){
+  var S=NEWS.stories; if(!S.length)return emptyState();
+  var h=breakingBanners()+weekBadge();
+  var cats=['All'].concat(CATS.filter(function(c){return S.some(function(s){return s.category===c})}));
+  h+=chipRow(cats,catFilter,'cat');
+  if(catFilter!=='All'){
+    var l=S.filter(function(s){return s.category===catFilter});
+    var n=showMore.cat?40:12;
+    return h+section(catFilter)+cards(diversify(l,n,0.95,0.85))+moreBtn('cat',l.length,n)+(l.length?'':'<div class="empty">Nothing in this category right now.</div>');
+  }
+  var eu=S.filter(function(s){return EURO_GROUP.indexOf(s.region)>-1});
+  var euPick=diversify(eu,showMore.today?10:6,0.72,0.9), taken=byIds(euPick);
+  var rest=without(S.filter(function(s){return EURO_GROUP.indexOf(s.region)===-1}),taken);
+  var worldPool=rest.filter(function(s){return ['Culture','Science','Tech','Sport','Health','Education','Society','Media'].indexOf(s.category)===-1});
+  var wPick=diversify(worldPool,showMore.today?12:7,0.75,0.8); Object.assign(taken,byIds(wPick));
+  var softPool=without(S,taken).filter(function(s){return ['Culture','Science','Tech','Sport','Health','Education','Society','Media'].indexOf(s.category)>-1});
+  var sPick=diversify(softPool,showMore.today?10:5,0.7,0.9); Object.assign(taken,byIds(sPick));
+  h+=section('France & Europe')+cards(euPick)+section('Around the world')+cards(wPick)+section('Beyond the headlines')+cards(sPick);
+  var left=without(S,taken).length;
+  if(!showMore.today&&left>0)h+='<button class="more-btn" data-more="today">Show more stories</button>';
+  return h;
+}
+function renderEurope(){
+  var S=NEWS.stories.filter(function(s){return EURO_GROUP.indexOf(s.region)>-1}); if(!NEWS.stories.length)return emptyState();
+  var h=breakingBanners().length?'':'';
+  h+=chipRow(['All'].concat(EURO_GROUP),euFilter,'eu');
+  var l=euFilter==='All'?S:S.filter(function(s){return s.region===euFilter});
+  var n=showMore.eu?60:15;
+  return h+(l.length?cards(diversify(l,n,0.88,1)):'<div class="empty">Nothing here right now.</div>')+moreBtn('eu',l.length,n);
+}
+function renderWorld(){
+  if(!NEWS.stories.length)return emptyState();
+  var S=NEWS.stories.filter(function(s){return EURO_GROUP.indexOf(s.region)===-1});
+  var h=chipRow(['All'].concat(WORLD_REGIONS),wFilter,'w');
+  var l=wFilter==='All'?S:S.filter(function(s){return s.region===wFilter});
+  var n=showMore.w?60:15;
+  return h+(l.length?cards(diversify(l,n,0.88,wFilter==='All'?0.85:1)):'<div class="empty">Nothing here right now.</div>')+moreBtn('w',l.length,n);
+}
+function renderThemes(){
+  var w=weekInfo(),S=NEWS.stories,h='';
+  var d=Math.ceil((new Date(2026,10,3)-new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()))/864e5);
+  if(w.cur){
+    var wt=w.cur[3];
+    h+='<div class="week"><div class="k">THIS WEEK · CHAPTER '+esc(w.cur[2])+'</div><div class="t">'+esc(w.cur[1])+'</div><div class="s">'+(w.cur[4]?esc(w.cur[4])+' · ':'')+(wt.length?'News on this theme below':'No dedicated news theme this week — here is the broader picture')+'</div></div>';
+    var l=wt.length?S.filter(function(s){return s.themes&&s.themes.some(function(t){return wt.indexOf(t)>-1})}):[];
+    if(wt.length)h+=l.length?cards(diversify(l,4,0.9,0.9)):'<div class="empty">No matching story yet — check back after the next update.</div>';
+  }
+  if(w.next)h+='<div class="box"><h4>Next week</h4><b>'+esc(w.next[1])+'</b><div class="hl">Chapter '+esc(w.next[2])+' · from '+esc(w.next[0].split('-').reverse().join('/'))+'</div></div>';
+  if(d>0&&d<=60)h+='<div class="box"><h4>US midterm elections</h4><div class="count">'+d+' day'+(d>1?'s':'')+'</div><div class="hl">Tuesday 3 November 2026 · Congress, Senate and governors up for election. Part of your US institutions unit.</div></div>';
+  else if(d===0)h+='<div class="box"><h4>US midterm elections</h4><div class="count">Today</div></div>';
+  h+=section('Browse by curriculum theme');
+  var ids=Object.keys(THEME_LABELS);
+  var counts={};S.forEach(function(s){(s.themes||[]).forEach(function(t){counts[t]=(counts[t]||0)+1})});
+  h+='<div class="chips" style="flex-wrap:wrap;overflow:visible;margin:0;padding:0 0 8px">'+ids.map(function(t){return '<button class="chip-b'+(themeSel===t?' on':'')+'" data-chip="theme" data-val="'+t+'">'+esc(THEME_LABELS[t])+(counts[t]?' · '+counts[t]:'')+'</button>'}).join('')+'</div>';
+  if(themeSel){
+    var tl=S.filter(function(s){return s.themes&&s.themes.indexOf(themeSel)>-1});
+    h+=tl.length?cards(diversify(tl,showMore.theme?40:10,0.92,0.9))+moreBtn('theme',tl.length,showMore.theme?40:10):'<div class="empty">No story on this theme right now.</div>';
+  }
+  h+=section('Exam toolkit')+'<div class="box">'+TOOLKIT.map(function(t){return '<details><summary>'+esc(t[0])+'</summary><ul>'+t[1].split(' · ').map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></details>'}).join('')+'</div>';
+  return h;
+}
+function renderSaved(){
+  var l=NEWS.stories.filter(function(s){return saved[s.id]});
+  var gone=Object.keys(saved).filter(function(id){return !NEWS.stories.some(function(s){return s.id===id})}).map(function(id){return saved[id]});
+  var all=l.concat(gone.filter(function(s){return s&&s.title}));
+  if(!all.length)return '<div class="empty"><b>Nothing saved yet</b>Tap ☆ Save on a story to keep it here, even after it leaves the feed.</div>';
+  return cards(all.sort(function(a,b){return new Date(b.published)-new Date(a.published)}));
+}
+var TITLES={today:'Meridian',europe:'France & Europe',world:'The world',themes:'Prépa',saved:'Saved'};
+function render(){
+  var scroll=window.scrollY;
+  $('pt').textContent=TITLES[view];
+  var html=view==='today'?renderToday():view==='europe'?renderEurope():view==='world'?renderWorld():view==='themes'?renderThemes():renderSaved();
+  $('app').innerHTML=html;
+  document.querySelectorAll('.nb').forEach(function(b){b.classList.toggle('on',b.dataset.v===view)});
+  var n=Object.keys(saved).length;$('sb').textContent=n;$('sb').classList.toggle('hidden',!n);
+  window.scrollTo(0,scroll);
+}
+function renderUpdated(){
+  if(!NEWS.updated){$('upd').textContent='No data yet';return}
+  var fresh=NEWS.stories.filter(function(s){return new Date(s.published).getTime()>lastVisit}).length;
+  $('upd').innerHTML='Updated '+ago(NEWS.updated)+' · '+NEWS.stories.length+' stories'+(lastVisit&&fresh?' · <b>'+fresh+' new since your last visit</b>':'');
+}
+
+/* ============ actions ============ */
+function findStory(id){return NEWS.stories.filter(function(s){return s.id===id})[0]||saved[id]}
+function markRead(id){if(!read[id]){read[id]=Date.now();lsSet('mer_read',read);var el=document.querySelector('.story[data-id="'+id+'"]');if(el)el.classList.add('read')}}
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-a],[data-chip],[data-more],.nb,.story');if(!t)return;
+  if(t.dataset.a==='read'){markRead(t.dataset.id);return}
+  if(t.dataset.a==='save'){
+    var s=findStory(t.dataset.id);if(!s)return;
+    if(saved[s.id])delete saved[s.id];else saved[s.id]=s;
+    lsSet('mer_saved',saved);render();return;
+  }
+  if(t.dataset.a==='practice'){openPractice(t.dataset.id);return}
+  if(t.dataset.chip){
+    var k=t.dataset.chip,v=t.dataset.val;
+    if(k==='cat'){catFilter=v;showMore.cat=false}else if(k==='eu')euFilter=v;else if(k==='w')wFilter=v;else if(k==='theme')themeSel=(themeSel===v?null:v);
+    render();return;
+  }
+  if(t.dataset.more){showMore[t.dataset.more]=true;render();return}
+  if(t.classList.contains('nb')){view=t.dataset.v;window.scrollTo(0,0);render();return}
+  if(t.classList.contains('story')){
+    if(e.target.closest('a,button'))return;
+    var id=t.dataset.id;open_[id]=!open_[id];t.classList.toggle('open',open_[id]);
+  }
+});
+
+/* ---- practice sheet ---- */
+var practiceId=null;
+function wordCount(s){var m=s.trim().match(/\S+/g);return m?m.length:0}
+function openPractice(id){
+  var s=findStory(id);if(!s)return;practiceId=id;
+  $('p-story').innerHTML='<b>'+esc(s.title)+'</b><br>'+esc(s.summary||'')+' <a href="'+esc(safeUrl(s.link))+'" target="_blank" rel="noopener">Open the article ↗</a>';
+  $('p-text').value=lsGet('mer_draft_'+id,'');
+  $('p-phr').innerHTML=PHRASES.map(function(p){return '<button data-ins="'+esc(p)+'">'+esc(p)+'</button>'}).join('');
+  updWc();$('psheet').classList.add('show');
+}
+function updWc(){var n=wordCount($('p-text').value),el=$('p-wc');el.textContent=n+' words'+(n>=70&&n<=120?' ✓ on target':n>120?' — too long for a résumé':'');el.className='wc'+(n>=70&&n<=120?' ok':n>120?' over':'')}
+function closePractice(){if(practiceId)lsSet('mer_draft_'+practiceId,$('p-text').value);$('psheet').classList.remove('show')}
+function copyPractice(){var t=$('p-text');t.select();try{document.execCommand('copy')}catch(e){}}
+$('p-text').addEventListener('input',updWc);
+$('p-phr').addEventListener('click',function(e){var b=e.target.closest('[data-ins]');if(!b)return;var t=$('p-text');t.value+=(t.value&&!/\s$/.test(t.value)?' ':'')+b.dataset.ins+' ';updWc();t.focus()});
+
+/* ---- info sheet ---- */
+function openInfo(){
+  var H=NEWS.health||[],ok=H.filter(function(h){return h.ok}).length;
+  $('i-stat').textContent=NEWS.updated?('Last update '+new Date(NEWS.updated).toLocaleString()+' · '+ok+'/'+H.length+' sources responding · '+NEWS.stories.length+' stories'):'No data loaded yet.';
+  var bad=H.filter(function(h){return !h.ok}).map(function(h){return h.outlet+' ('+h.id+')'});
+  $('i-fail').textContent=bad.length?bad.join(', '):'All sources responded.';
+  $('isheet').classList.add('show');
+}
+function closeInfo(){$('isheet').classList.remove('show')}
+function resetRead(){read={};lsSet('mer_read',read);closeInfo();render()}
+$('info').addEventListener('click',openInfo);
+
+/* ============ loading ============ */
+function apply(data){
+  if(!data||!data.stories)return false;
+  NEWS=data;loadedAt=Date.now();renderUpdated();render();return true;
+}
+function load(manual){
+  var btn=$('refresh');btn.classList.add('spin');
+  return fetch('news.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
+    apply(d);try{localStorage.setItem('mer_cache',JSON.stringify(d))}catch(e){}
+  }).catch(function(){
+    if(!NEWS.stories.length){var c=lsGet('mer_cache',null);if(c)apply(c);else{renderUpdated();render()}}
+    if(manual)$('upd').textContent='Offline — showing the last saved news';
+  }).then(function(){btn.classList.remove('spin')});
+}
+$('refresh').addEventListener('click',function(){load(true)});
+document.addEventListener('visibilitychange',function(){
+  if(document.hidden){lsSet('mer_last',Date.now());return}
+  if(Date.now()-loadedAt>5*60e3)load(false);else renderUpdated();
+});
+window.addEventListener('pagehide',function(){lsSet('mer_last',Date.now())});
+var cached=lsGet('mer_cache',null);if(cached)apply(cached);else render();
+load(false).then(function(){lastVisit=lsGet('mer_last',0)});
+if('serviceWorker' in navigator){window.addEventListener('load',function(){try{navigator.serviceWorker.register('./sw.js').catch(function(){})}catch(e){}})}
+</script>
+</body>
+</html>

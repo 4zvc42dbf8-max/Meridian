@@ -1,0 +1,66 @@
+[
+ {"id":"fr24","outlet":"France 24","url":"https://www.france24.com/en/rss","region":"World","category":"World","w":1.0},
+ {"id":"rfi","outlet":"RFI","url":"https://www.rfi.fr/en/rss","region":"World","category":"World","w":0.9},
+ {"id":"euronews","outlet":"Euronews","url":"https://www.euronews.com/rss?format=mrss","region":"Europe","category":"World","w":1.0},
+ {"id":"dw","outlet":"DW","url":"https://rss.dw.com/rdf/rss-en-all","region":"World","category":"World","w":0.9},
+ {"id":"local","outlet":"The Local France","url":"https://www.thelocal.fr/feed","region":"France","category":"Society","w":0.8},
+ {"id":"politico_eu","outlet":"Politico Europe","url":"https://www.politico.eu/feed/","region":"Europe","category":"Politics","w":0.9},
+ {"id":"bbc_eu","outlet":"BBC News","url":"https://feeds.bbci.co.uk/news/world/europe/rss.xml","region":"Europe","category":"World","w":1.1},
+ {"id":"gu_fr","outlet":"The Guardian","url":"https://www.theguardian.com/world/france/rss","region":"France","category":"World","w":1.1},
+ {"id":"gu_eu","outlet":"The Guardian","url":"https://www.theguardian.com/world/europe-news/rss","region":"Europe","category":"World","w":1.1},
+ {"id":"eco_eu","outlet":"The Economist","url":"https://www.economist.com/europe/rss.xml","region":"Europe","category":"World","w":1.2,"max_age_h":200},
+
+ {"id":"bbc_world","outlet":"BBC News","url":"https://feeds.bbci.co.uk/news/world/rss.xml","region":"World","category":"World","w":1.1},
+ {"id":"gu_world","outlet":"The Guardian","url":"https://www.theguardian.com/world/rss","region":"World","category":"World","w":1.1},
+ {"id":"nyt_world","outlet":"The New York Times","url":"https://rss.nytimes.com/services/xml/rss/nyt/World.xml","region":"World","category":"World","w":1.1},
+ {"id":"npr_world","outlet":"NPR","url":"https://feeds.npr.org/1004/rss.xml","region":"World","category":"World","w":1.0},
+ {"id":"aljaz","outlet":"Al Jazeera","url":"https://www.aljazeera.com/xml/rss/all.xml","region":"World","category":"World","w":1.0},
+ {"id":"ind_world","outlet":"The Independent","url":"https://www.independent.co.uk/news/world/rss","region":"World","category":"World","w":0.9},
+ {"id":"wapo_world","outlet":"The Washington Post","url":"https://feeds.washingtonpost.com/rss/world","region":"World","category":"World","w":1.0},
+ {"id":"eco_world","outlet":"The Economist","url":"https://www.economist.com/the-world-this-week/rss.xml","region":"World","category":"World","w":1.2,"max_age_h":200},
+ {"id":"eco_intl","outlet":"The Economist","url":"https://www.economist.com/international/rss.xml","region":"World","category":"World","w":1.2,"max_age_h":200},
+
+ {"id":"bbc_pol","outlet":"BBC News","url":"https://feeds.bbci.co.uk/news/politics/rss.xml","region":"UK","category":"Politics","w":1.0},
+ {"id":"gu_pol","outlet":"The Guardian","url":"https://www.theguardian.com/politics/rss","region":"UK","category":"Politics","w":1.0},
+ {"id":"gu_uspol","outlet":"The Guardian","url":"https://www.theguardian.com/us-news/us-politics/rss","region":"USA","category":"Politics","w":1.0},
+ {"id":"nyt_pol","outlet":"The New York Times","url":"https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml","region":"USA","category":"Politics","w":1.0},
+ {"id":"npr_pol","outlet":"NPR","url":"https://feeds.npr.org/1014/rss.xml","region":"USA","category":"Politics","w":1.0},
+ {"id":"wapo_pol","outlet":"The Washington Post","url":"https://feeds.washingtonpost.com/rss/politics","region":"USA","category":"Politics","w":1.0},
+
+ {"id":"bbc_biz","outlet":"BBC News","url":"https://feeds.bbci.co.uk/news/business/rss.xml","region":"World","category":"Economy","w":1.0},
+ {"id":"gu_biz","outlet":"The Guardian","url":"https://www.theguardian.com/business/rss","region":"World","category":"Economy","w":1.0},
+ {"id":"nyt_biz","outlet":"The New York Times","url":"https://rss.nytimes.com/services/xml/rss/nyt/Business.xml","region":"World","category":"Economy","w":1.0},
+ {"id":"npr_biz","outlet":"NPR","url":"https://feeds.npr.org/1006/rss.xml","region":"USA","category":"Economy","w":0.9},
+ {"id":"eco_biz","outlet":"The Economist","url":"https://www.economist.com/business/rss.xml","region":"World","category":"Economy","w":1.2,"max_age_h":200},
+ {"id":"eco_fin","outlet":"The Economist","url":"https://www.economist.com/finance-and-economics/rss.xml","region":"World","category":"Economy","w":1.2,"max_age_h":200},
+
+ {"id":"gu_env","outlet":"The Guardian","url":"https://www.theguardian.com/environment/rss","region":"World","category":"Environment","w":1.1},
+ {"id":"bbc_sci","outlet":"BBC News","url":"https://feeds.bbci.co.uk/news/science_and_environment/rss.xml","region":"World","category":"Environment","w":1.0},
+ {"id":"nyt_climate","outlet":"The New York Times","url":"https://rss.nytimes.com/services/xml/rss/nyt/Climate.xml","region":"World","category":"Environment","w":1.0},
+
+ {"id":"gu_sci","outlet":"The Guardian","url":"https://www.theguardian.com/science/rss","region":"World","category":"Science","w":1.0},
+ {"id":"nyt_sci","outlet":"The New York Times","url":"https://rss.nytimes.com/services/xml/rss/nyt/Science.xml","region":"World","category":"Science","w":1.0},
+ {"id":"npr_sci","outlet":"NPR","url":"https://feeds.npr.org/1007/rss.xml","region":"World","category":"Science","w":0.9},
+ {"id":"eco_sci","outlet":"The Economist","url":"https://www.economist.com/science-and-technology/rss.xml","region":"World","category":"Science","w":1.2,"max_age_h":200},
+ {"id":"bbc_tech","outlet":"BBC News","url":"https://feeds.bbci.co.uk/news/technology/rss.xml","region":"World","category":"Tech","w":1.0},
+ {"id":"gu_tech","outlet":"The Guardian","url":"https://www.theguardian.com/technology/rss","region":"World","category":"Tech","w":1.0},
+ {"id":"nyt_tech","outlet":"The New York Times","url":"https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml","region":"World","category":"Tech","w":1.0},
+
+ {"id":"bbc_health","outlet":"BBC News","url":"https://feeds.bbci.co.uk/news/health/rss.xml","region":"World","category":"Health","w":1.0},
+ {"id":"nyt_health","outlet":"The New York Times","url":"https://rss.nytimes.com/services/xml/rss/nyt/Health.xml","region":"World","category":"Health","w":1.0},
+ {"id":"gu_soc","outlet":"The Guardian","url":"https://www.theguardian.com/society/rss","region":"UK","category":"Society","w":1.0},
+
+ {"id":"gu_cult","outlet":"The Guardian","url":"https://www.theguardian.com/culture/rss","region":"World","category":"Culture","w":1.0},
+ {"id":"bbc_arts","outlet":"BBC News","url":"https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml","region":"World","category":"Culture","w":1.0},
+ {"id":"nyt_arts","outlet":"The New York Times","url":"https://rss.nytimes.com/services/xml/rss/nyt/Arts.xml","region":"World","category":"Culture","w":1.0},
+ {"id":"eco_culture","outlet":"The Economist","url":"https://www.economist.com/culture/rss.xml","region":"World","category":"Culture","w":1.2,"max_age_h":200},
+
+ {"id":"bbc_sport","outlet":"BBC Sport","url":"https://feeds.bbci.co.uk/sport/rss.xml","region":"World","category":"Sport","w":0.9},
+ {"id":"gu_sport","outlet":"The Guardian","url":"https://www.theguardian.com/sport/rss","region":"World","category":"Sport","w":0.9},
+ {"id":"nyt_sport","outlet":"The New York Times","url":"https://rss.nytimes.com/services/xml/rss/nyt/Sports.xml","region":"World","category":"Sport","w":0.9},
+
+ {"id":"gu_edu","outlet":"The Guardian","url":"https://www.theguardian.com/education/rss","region":"UK","category":"Education","w":1.0},
+ {"id":"bbc_edu","outlet":"BBC News","url":"https://feeds.bbci.co.uk/news/education/rss.xml","region":"UK","category":"Education","w":1.0},
+ {"id":"nyt_edu","outlet":"The New York Times","url":"https://rss.nytimes.com/services/xml/rss/nyt/Education.xml","region":"USA","category":"Education","w":1.0},
+ {"id":"gu_media","outlet":"The Guardian","url":"https://www.theguardian.com/media/rss","region":"World","category":"Media","w":1.0}
+]
