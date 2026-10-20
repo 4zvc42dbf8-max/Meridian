@@ -1,0 +1,43 @@
+name: Update news
+
+on:
+  push:
+    paths:
+      - '.github/workflows/news.yml'
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-news
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Get the files
+        uses: actions/checkout@v4
+
+      - name: Collect the news
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python3 fetch_news.py
+
+      - name: Save the result
+        run: |
+          git config user.name "meridian-bot"
+          git config user.email "meridian-bot@users.noreply.github.com"
+          git add news.json
+          if [ -f sent.json ]; then git add sent.json; fi
+          if git diff --staged --quiet; then
+            echo "Nothing new to save"
+          else
+            git commit -m "Update news"
+            git pull --rebase --autostash origin main
+            git push origin HEAD:main
+          fi
